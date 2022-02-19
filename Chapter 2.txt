@@ -1,0 +1,30 @@
+Laravel System Requirements:
+- php >= 7.13
+- OpenSSL php extension
+- PDO PHP extension
+- MBstring PHP extension
+- Tokenizer PHP extension
+- XML PHP extension
+- Ctype PHP extension
+- JSON PHP extension
+- BCMath PHP extension
+
+
+Laravel Homestead:
+it is a too for servers and virtuals boxes
+
+Lambo: a tool made by the book owner to make the repeated steps after creating a new laravel project every time, like:
+- laravel new.
+- committing the project to Git
+- setting .env credentials with reasonable defaults.
+- Open the project in browser.
+- open the project in the code editor (Optinoaly).
+
+.env file: where you put your environment configurations.
+.env.example: where you define what configurations you need but without valus. (for others to specify).
+
+For env, it is not good to use it outside the config files, because of the cache, so, for each env variable, set a config term for it.
+
+
+To run the project in the browser, use `php artisan serve` in command line.
+- It opens be default in the link: http://localhost:8000

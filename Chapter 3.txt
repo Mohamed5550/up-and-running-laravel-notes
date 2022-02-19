@@ -1,0 +1,183 @@
+HTTP Versbs:
+- GET: Request a resource
+- HEAD: Ask for header only
+- POST: create a resource
+- PUT: Overwrite a resource
+- PATCH: Modify a resource
+- DELETE: Delete a resource
+- OPTIONS: ask the server which verbs are allowed on this URL
+
+
+REST:
+- Focuses on one resource at a time
+- Work with predictable URL structures using HTTP verbs.
+- Returns a JSON response
+
+Closures: are the php version of anonymous functions
+
+Defining routes:
+- static method: Route:get()
+- non-staic method: $router->get();
+
+The route verb match
+- Route:match(["GET", "POST"], "/", function(){});
+
+Routes calling controller method:
+- Route:get("/", "ControlName@methodName")
+
+Route parameters:
+- Optional: Route::get("users/{id?}", function($id = "anyId"){})
+- Regular expresions: 
+    Route->get("users/{id}", function($id) {}) -> where("id", "[0-9]")
+- It's most common to use the same parameters names for the routes and controllers methods.
+
+
+The url global helper:
+- to point to a specific route from a view template:
+    <a href="<?php echo url('/');?>"></a>
+    // Outputs <a href="http://myapp.com/">
+
+Defining routes with names:
+- fluent method: Route::get("users/{id}", function($id) {})->name("user.show")
+- Common naming convention: resourseName.actoin (photo.edit)
+- route helper: route("members.show", ["id" => 10]) // a named route
+- route helper parameters: [1, 2] (by order), ["id" => 1, "commentId" = 14] (by index)
+
+
+Route groups:
+- to group a collection of routes with the same auth, namespace or prefix
+- Route::group(function(){
+    Route::get("hi", function(){})
+})
+- it does nothing by default
+
+Middlewares: 
+- it is commonly used to assign auth for a group
+- Route::middleware('auth)->group(function() {})
+- It's more common to defin middlewares in the controller
+- You can use except and only to specify the method which will recice the middleware
+- you define it in the constructor: 
+public function __construct() {
+    $this->middleware('auth')
+    $this->middleware('auth-admin')->only("editUser")
+    $this->middleware('auth-member')->except("editUser")
+}
+
+Rate limiting:
+- It is used to limit a user to access the page for specified number of times.
+- Route->middleware("auth:api", "throttle:60,1")->group()
+- the first parameters is the number of tries, the second one is the minutes before reseting it.
+
+
+Path prefixes:
+- Route:prefix("dashboard")->group();
+
+Fallback routes:
+- put it at the end of the page to catch the error requests
+- Route::any("{anything}", 'CatchAllContorller')->where("anything", "*");
+- in Laravel 5.6+: Route::fallback(function(){})
+
+
+Subdomain Routing:
+- Route::domain("api.myapp.com")->group()
+- Route::domain("{account}.myapp.com")->group(function(){
+    Route::get("/users/{$id}", function($account, $id))
+})
+- Any parameters passed into the group, gets passed into the routes' methods as the first parameters
+
+Namespace prefixes:
+- Route::namespace("Dashboard")->group()
+// App/Http/Controllers/Dashboard
+
+
+Route prefixes:
+- Route::name("users.")->prefix("users")->group(function() {
+    Route::name("commnets", function(){})->name("comments")
+    // name: users.comments
+})
+
+Singed routes:
+- You can use them to prevent unwanted email confirmations actions.
+- normal: URL::route("/page", ["id]=> 234)
+- with singature: URL::signedRoute("/page", [id => 234]) 
+- temporary: URL::temporarySignedRoute("/page", now()->addHours(4), [id => 234])
+- allowing signed in routes: Route::get()->name()->middleware("signed")
+
+
+Views:
+- you can render plain php with: file.php
+- you can render a blade file using file.blade.php
+- view(), View::make
+- Routes::get("/tasls", function() {
+    return view("tasks.index")->with("tasks", Tasks::all());
+})
+- return view directly with: Route::view("/", "home", ["id" => 234])
+- view composers: view()->share("variableName", "VariableValue")
+
+Controllers:
+- CRUD: Create, Read, Update, Delete
+- make controller with artisna command: php artisan make:controller TaskController
+- you can include CRUD methods using the flag --resource
+- Route::resource, binds routes to all controller resource methods
+- Route::apiResource, the same as above for API's
+- you can use __invoke for single actoin controllers.
+
+
+Artisan route:list:
+- to list all routes in the application
+
+Route Model Binding:
+- Implicit: Route::get("users/{user}", function(User $user) {
+    return view("users.show")->with(["user" => $user);
+});
+This typehinting will tell Laravel that user is always and ID.
+- Custom: you can add it herer, App\Providers\RouteServiceProvider
+
+
+Route Caching:
+- to use it, don't use route closures.
+- php artisan route:cache to serialize the cache.
+- phh artisan route:clear to clear route cache.
+
+
+Form method spoofing:
+- because html forms allow post and get only.
+- <input type="hidden" name="_metod" value="DELETE" />
+- or @method("DELETE")
+
+CSRF Protection:
+- <?php echo csrf_field(); ?>
+- or <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" />
+- or @csrf.
+- for javascrit applications: 
+    <meta name="csrf-token" content="<?php echo csrf_token();?>" id="token" />
+    // jQuery
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content");        
+        }
+    })
+
+
+Route Redirect:
+- redirect()->to("")
+- redirect("")
+- Redirect::to("")
+- Route::redirect("page", "to", status_code)
+- redirect()->route: points to a route name, can take parameters
+- redirect()->back() = back(): go to previous page
+- other: home(), refresh(), away(), secure(), action(), guest(), intended()
+- redirect()->with(): takes parameters
+- redirect()->withInput(): when error in validation and sending the data back
+- you can get data passed with it with old() helper
+- aborting: abort(403, you cannot do that!')
+
+
+Custom responses:
+- response()->json()
+- response()->download("path", "name")
+- to view file: resopnse()->file()
+- response()->streamDownload():
+    response()->streamDownload(function() {
+        echo DocumentService::file("myFile")->getContent();
+    }, 'myfile.pdf')

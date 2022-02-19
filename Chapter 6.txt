@@ -1,0 +1,81 @@
+Mix
+
+- Soure Maps:
+    = They are telling the browser which file is responsible for a particular part of the minified code
+    = It is not running by default, to run it, add .sourceMaps() in webpack.mix.js
+- the files are in /resources folder
+
+- Running mix:
+    = npm run dev
+    = npm run watch or npm run watch-poll if not worked
+    = npm run prod
+
+
+- for running without preprocessors
+    = mix.styles("folder", "all.css"); // folder or array
+
+- concatenating javascript:
+    = mix.scripts("folder", "all.js"); // folder or array
+- copying:
+    = mix.copy() // file
+    = mix.copyDirectory() // directory
+
+- Versioning:
+    = mix.sass().version() // mix versioning
+    = mix("css/app.css") // mix helper in blades
+
+- Vendor extraction:
+    = extract the vendor files into a separate file
+    = mix.js().extract() 
+    = then use the three files in order
+    = manifest.js, vendor.js, app.js
+
+- Environment mix variables:
+    = add the with MIX_ prefix in .env (MIX_APP_NAME)
+    = call them in mix-compiled files process.env.MIX_APP_NAME
+
+- Frontend Presets:
+    = to use a built-in preset:
+        -- php artisan preset react
+        -- php artisan preset bootstrap
+        -- php artisan preset none
+    
+- Pagination:
+    = DB::table("table_name")->paginate(number_of_results_per_page)
+    = links(): to render pagination controls
+    = ->onEachSide(3): how many links would be shown
+    = create manual paginators:
+        -- Illuminate\Pagination\Paginator
+        -- Illuminate\Pagination\LengthAwarePaginator (cares about pages links)
+
+- Message Bags:
+    = Illumiate\Support\MessageBag
+
+- String Helpers:
+    = They are available as methods on the Str class: Str::plural()
+    = or global helpers: str_plural();
+    = e(): htmlentities()
+    = starts_with(), ends_with(), contains()
+    = str_is() // first: regex, second: string
+    = str_slug() // converts it to slug
+    = str_plural('dog', 1) // dogs
+    = camel_case(), kebab_case(), snake_case(), studly_case(), title_case()
+    = str_after(), str_before(), trim and cuts the string after or before substring
+    = str_limit(string, limit) // truncates it
+
+- Localization:
+    = App::setLocale($local_name) in boot() of AppServiceProvider
+    = config/app.php: fallback_locale: default language
+    = Basic Localization:
+        -- __() helper for translation
+        -- or @lang
+        -- __("navigatoin.back"): resources/lang/en/navigatoin.php and looks for back
+    = Parameters:
+        -- "back" => "Back to :section Dashboard"
+            // in the blade
+            __("navigation.back", ["section => "users"])
+        -- trans_choice("tasks.deleted", $num)
+            // in translation file
+            "deleted" => "You deleted a task|You deleted tasks"
+        -- or more complex one:
+             "deleted" => "{0} You deleted a task|[1,4] You deleted a few tasks|[5,Inf] You deleted a whole ton of tasks"

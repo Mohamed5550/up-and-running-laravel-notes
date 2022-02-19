@@ -1,0 +1,45 @@
+Testing terms:
+- Unit tests: focus on only one unit like: method or class.
+- Feature tests: test how the units work together.
+- Application test: tests the behavior whole application.
+- Regression test: Didn't get it yet!
+
+Tests files:
+- tests/Feature
+- tests/Unit
+
+Running tests:
+- type ./vendor/bin/phpunit in the command line
+- dot: passed, F: failed
+- Any method starts with test will work
+- Any method with the @test will work
+
+Making a test:
+- php artisan make:test nameOfTest
+
+Envoironment:
+- you can add .env parameter in testing environment int phpunit.xml with:
+     <env name="DB_CONNECTION" value="mysql" />
+
+Unit test:
+- You can test a single method or class even it is connected to a framework
+
+Assertions:
+- AssertOk: checks for status code 200 response
+- AssertStatus: checks for a status
+- AssertSee, AssertDontSee: the response contains text or no
+- AssertJson: check if it is in Json format
+- AssertViewHas: check if view has key (or and value)
+- AssertSessionHas: check if session has key
+- AssertCookie: check if cookie has key
+- AssertCookieExpired: check if cookie has expired key
+- AssertCookieNotExpired: check if cookie has key that is not expired
+- AssertRedirect: check if the page redirects to a route
+
+
+WithoutExceptionHandling:
+- is used to test the request without expecting exceptions
+
+Mocking:
+
+

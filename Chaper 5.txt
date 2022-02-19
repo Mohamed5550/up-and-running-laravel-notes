@@ -1,0 +1,163 @@
+Database configuration file:
+- configure/database.php
+
+You select a specific connection with:
+- DB::connection("secondary")->select("select * from users");
+
+Migration:
+- migration is a snigle file to define the modificatoins up and down
+- make migration:
+    = php artisan make:migration create_name_table
+    = optional flag: --table=table_name for modifying 
+    = optional flag: --create=table_name for creating
+
+Creating Tables:
+- method create(table_name, closure to define columns)
+- pass the $table as a Blue print instance, it has the methods
+
+Columns types:
+- integer, tinyInteger, smallInteger, mediumInteger, bigInteger
+- string
+- boolean
+- binary: BLOB
+- decimal
+- double
+- float
+- char
+- datetime
+- enum
+- json, jsonb
+- text
+- time
+- timestamp
+- uuid
+
+Special Columns:
+- Increments, bigIncrements
+- timestamps: created_at, updated_at
+- remeberToken
+- softDelete
+- morphs
+
+Extra properties:
+- nullable
+- after
+- first
+- last
+- default
+- unique
+- primary
+- index
+- unsigned
+
+Drop:
+- dropIfExists("table_name")
+
+Modifying columns:
+- same as creating then ->change()
+- renameColumn(): to rename
+- dropColumn(): to drop
+
+Indexes and foreign keys:
+- primary: not necessary with increments
+- unique
+- index
+- dropPrimary, dropUnique and dropIndex to drop indexes
+- foreign key: $table->foreign("user_id")->references("id")->on("users)
+- you can use onDelete(), onUpdate()
+- dropForeign()
+
+Running migrations:
+- php artisan migrate: you can use --seed
+- migrate:install: create table trackers (runs automatically with migrate)
+- migrate:reset: rolls back all the migrations
+- migrate:refresh: reset then migrate
+- migrate:fresh: like refresh but doesn't run down(), it just deletes the tables
+- migrate:rollback: rolls back the nth migration (--step=n)
+- migrate:status: shows every migration and Y or N
+
+Seeding:
+- --seed to run the seeders with migration
+- php artisan db:seed --class=VotesTableSeeder to run independently
+- php artisan make:seeder ContactsTableSeeder: to create seeder
+
+Factory models:
+- 
+
+
+Query builder:
+- DB::statement("drop table users"): I think it is like exec
+- DB::select("select * from table where id = ?", [3])
+- DB::table("users")->get()
+
+
+Transactions:
+- A group of commands to be done all, or no one if any one fails.
+- DB::transaction(function() use ($userId, $numVotes){
+        DB::table() // etc
+    }) 
+- for manual transactions
+- DB::beginTransaction();
+    if($error) {
+        DB::rollback();
+    }
+    DB::commit();
+
+
+== Eloquent ==
+
+Making a model
+- php artisan make:model (you can use --migration or -m to make a migration with it)
+- for customizing default table props: $table, $primaryKey, $incrementing, $timestamp, $dateFormat(takes format like php date())
+
+Getting data:
+- first, find (OrFail)
+- uset get() instead of all()
+
+Chunk
+- breaking the requests into smaller pieces
+- Contact::chunk(100, function($contacts) {
+    foreach($contacts as $contact) {
+        
+    }
+})
+
+- Aggregates: count, sum, avg
+
+
+Insert and update with eloquent:
+- Two primary ways:
+    = $contact = new Contact() or Contact:make, then $contact->save()
+    = Contact::create();
+- Updating:
+    = $contact = Contact::find(). $contact->save();
+    = Contact::where("id", 20)->update(["name] => "Mohamed")
+    = $contact = Contact::find(), $contact->update(["name" => "Mohamed"]);
+
+Mass assignment:
+- protected $fillable, $guarded
+- firstOrCreate(), firstOrNew()
+
+Deleting:
+- $contact = Contact::find(4)
+    $contact->delete();
+- Contact::destroy(4);
+- Contact::where()->delete();
+
+Soft deletes:
+- Enable it by doing three things:
+    = adding deleted_at column: $table->softDelete(), in the migration
+    = import the Trait, softDelete
+    = $dates = ["deleted_at"] in the Model
+- Contact::withTrashed()->get()
+- $contact->isTrashed() -> boolean
+- Contact::onlyTrashed()->get()
+- $contact->restore()
+- $contact->forceDelete()
+
+
+Scopes:
+- Local scope: scopeScopeName($query, $property)
+    {
+        return $query->where("prop", $property);    
+    }

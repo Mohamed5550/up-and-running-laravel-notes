@@ -1,0 +1,76 @@
+Echoing:
+- {{ $variable }}: like <?= htmlentities($variable) ?>
+- {!! $variable !!}: like <?= $variable ?>
+- you can skip it with @
+
+Control Structures:
+    Conditions:
+        - @if @elseif @else
+        - @unless @endunless
+    Loops:
+        - @for @foreach @while
+        - @forelse: foreach with fallback
+
+    Properties of foreach and forelse:
+        - index
+        - iteration
+        - first
+        - last
+        - parent
+        - remaining
+        - count
+        - depth
+
+Template Inheritance:
+{In parent page}
+- @yield("sectoin-name", "default value"): default value only if not extended
+- @section("section-name") @show
+{In child page}
+- @seciond("section-name", "value")
+- @section("section-name") value @endsection/@stop
+- @parent for parent content inside a section
+
+- @extends for extending
+
+
+Including with partials:
+- @include("extension-name", ["some" => "data"])
+- @includeIf, @includeWhen, @includeFirst
+- @each? Okay, I didn't get it
+
+Stack:
+- You can use stacks to push a new script or style file without replacing the others.
+- @push @endpush: at the bottom
+- @prepend @endprepend: at the top
+
+
+Components:
+- like @include but the inner content all is passed to the $slot variable
+- @slot("slot-name") @endslot: for multiple slots
+- you can pass the same second parameter of include too.
+
+Aliasing components:
+- Use Blade::aliasComponent("view-name", "alias")
+- to use @alias @endalias instead of @component("view-name") @endcomponent
+- php artisan view:clear to clear cache
+
+View composers:
+- sharing variable globally
+- view-scoped view composer: view()->composer("view-name", function($view) {
+    $view->with()
+})
+- it can be done with multipe views (array instead of view name
+- view-scoped view composer with classes
+
+Passing services to view
+
+Custom Blade Directives
+- Blade::directive("name", function() {
+    return "<?php //command ?>";
+})
+
+Simpler way to create custom if directive:
+- Blade::if("ifPublic", function() {
+    return (app("context"))->isPublic();
+})
+
