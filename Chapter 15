@@ -1,0 +1,51 @@
+Laravel provides the same abstraction for all mail and notification providers with the need to change the configuration only
+
+To use any of the could baes API drivers you will need Guzzle:
+composer require guzzlehttp/guzzle
+
+To use SES driver use the following command:
+composer require aws/aws-sdk-php:~3.0
+
+There are two different ways to send emails in Laravel: classic and mailable
+
+classic was for <= 5.2
+
+
+Mailable:
+    - php artisan make:mail UserCreated
+    - build to set the subject, body..etc
+    - sending: Mail:to("m@e.c")->send(new MailClass([]));
+
+Mail Templates:
+    - HTML vs Plain Text emails: use text() instead of view to return text instead of HTML
+
+Build methods:
+    - from
+    - subject
+    - attach
+    - attachData
+    - attachFromStorage
+    - priority
+    - withSwiftMessage
+
+Attachments and inline images:
+    - ->attach(storage_path(), $options)
+    - ->attachData(storage_path(), $options)
+    - ->attachFromStorage() // another filesystem like s3
+
+Markdown Mailable:
+    - ->markdown()
+
+Rendering Mailable on browser:
+    - you can render the email directly by custom route returning an instance of the mailable class
+
+Queues:
+    - Mail::queue() instead of Mail::send()
+    - Mail::later() the same but with scheduled time
+    - to make the mailable always queued implement the Illuminate\Contracts\Queue\ShouldQueue interface
+
+Local Development:
+    - three ways: log driver, SaaS (Mailtrap), "universal to"
+
+Notifications:
+    - 

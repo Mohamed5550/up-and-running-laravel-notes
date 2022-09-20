@@ -1,0 +1,24 @@
+===== Laravel Ecosystem =====
+
+
+=== Packages covered in the book ===
+- Valet
+- Homestead
+- Laravel installer
+- Mix
+- Dusk
+- Passport
+- Horizon
+- Echo
+
+=== Tools not covered in the book ===
+- Forge
+- Envoyer
+- Cashier
+- Socialite
+- Nova
+- Spark
+- Lumen
+- Envoy
+- Telescope
+

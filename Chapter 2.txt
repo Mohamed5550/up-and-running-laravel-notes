@@ -11,7 +11,7 @@ Laravel System Requirements:
 
 
 Laravel Homestead:
-it is a too for servers and virtuals boxes
+it is a tool for servers and virtuals boxes
 
 Lambo: a tool made by the book owner to make the repeated steps after creating a new laravel project every time, like:
 - laravel new.

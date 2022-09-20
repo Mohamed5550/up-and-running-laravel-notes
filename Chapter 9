@@ -1,0 +1,101 @@
+Authentication vs Authorization:
+- Authentication: is to know if the user is known for the website (login, signup)
+- Authorization: is to know if the authenticated user can perform some task
+
+
+All the Interfaces in Laravevl are under the Contracts Namespace 
+
+- auth()->check(): returns true if the users is logged in
+- auth()->guest(): returns true if the user is not logged in
+- auth()->user(): to get the current user (NULL if not logged in)
+- auth()->id(): to get only the current id (NULL if not logged in)
+
+- auth->viaRemember: to check if the user was logged in via remember token
+
+
+
+Manually loggin in users:
+- auth()->loginUsingId(5)
+- auth()->login($userObject) // implements the illuminate\contracts\auth\authenticable
+
+only once
+- auth()->once(["username" => "Mohamed"]) // any column [can be multiple]
+- auth()->onceUsingId(5)
+- auth()->once()
+- auth()->onceUsingId()
+
+
+- auth()->logout(): Need a description?
+
+
+logoutOtherDevices()
+
+-----
+
+auth Middlewares:
+- route middlewares are in App\Http\Kernel
+- Four route middlewares
+    = auth
+    = auth.basic
+    = guest
+    = can
+
+---
+Email Verification
+---
+- Making the User model implementing the Mustverify interface
+- adding the verified middleware to protect routes
+
+---
+Routes
+---
+- @auth @endauth
+- @guest @endguest
+- can take guard parameters 
+
+----------------
+
+Auth Events: Hmmm.. not now
+----------------
+
+Authorization ACL and Roles
+- verbs: can, cannot, allows, denies
+- ACL: Access Control List
+- Most of authoriztation control will be performed using the Gate facade
+- Example Gate::allows('edit-username', User::class)
+
+Defining Authorization Rules
+- boot method of AuthServiceProvider
+- Gate:define('do-someting', function($user, $someModel) {});
+
+Testing against the rule:
+- Like in the previous example
+- You can also add more than one parameter
+
+Resource Gates:
+- To define the most common actions: view, create, update, and delete
+- Gate:resouce('photos', 'App\Policies\PhotoPoilict');
+
+The Authorize middleware:
+- shortcut "can"
+- middleware("can:creaet-user");
+
+Controller Authorization:
+- authorize instead of cannot and aborting
+- authorizeResource do the job of all other resource individual autorization // put it in the __construct
+
+Checking on the userinstance:
+- $user->can('do-something')
+
+Blade checks:
+- @can('do-something', $model) @endcan
+- You can use @else
+- @cannot and @endcannot is allowed too
+
+Intercepting checks:
+- If you want to cancel all the checks for and admin for example
+- Gate::before return true
+
+Policies:
+- php artisan make:policy ContactPolicy
+- 

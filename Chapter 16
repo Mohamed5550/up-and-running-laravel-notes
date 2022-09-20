@@ -1,0 +1,39 @@
+===== Queues, Jobs, Events, Broadcasting and schedular =====
+- Queues:
+    = Like a real queu, a job is added then a worker process it int its time
+
+- Queue Jobs:
+    = every person in the queue is called a job
+    = php artisan make:job JobName
+    = handle method which runs when the job is dispatched
+    = job traits:
+        = Dispatchable: gives it the ability to dispatch itself
+        = Queuable: allows you to specify how Laravel should push it to the queue
+        = InteractsWithQueue: allows each job while being handle to control its relationship with the queue
+        = SerializesModels: Gives it the ability to serialize and deserializes Eloquent Models
+    = 
+
+- Worker:
+    = start a worker to run forver and call all jobs in queues
+
+- Handling Errors:
+    = don't retry a queue forever
+    = the preferred number of tries is 3
+    = php artisan queue:failed-table // creates a migration for failed jobs
+    = queue:retry, queue:forget, queue:flush
+    = $job->release() to delete the job
+
+- Laravel Horizon:
+    = a tool to track queue jobs
+
+- Events:
+    = Events are notifiers to the application that someting has happend
+    = firing events:
+        = Event::fire()
+        = app(Dispatcer::class)->fire()
+        = event()
+    = Listeners: php artisan make:listener ClassName --event=EventName
+    = you must link listener to listen to the event // maybe with event service provider
+
+- Websockets:
+    = 

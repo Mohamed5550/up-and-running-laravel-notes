@@ -1,0 +1,78 @@
+===== Helpers & Collections =====
+
+
+=== Helpers ===
+- Arrays:
+    = array_first
+    = aray_get // with nested arrays using dot notation
+    = array_has
+    = array_pluck // makes an array of one column of the whole array
+    = array_random
+
+- Strings:
+    = e // htmlentities
+    = starts_with
+    = ends_with
+    = str_contains
+    = str_limit
+    = str_is
+    = str_random
+    = str_slug
+    = str_plural
+    = __ // translation
+
+- Application Paths
+    = app_path
+    = base_path
+    = config_path
+    = database_path
+    = storage_path
+
+- URLs
+    = action // points to a controller, third parameter [true, false] => [absolute, relative]
+    = url, secure_url
+    = url => current, full, previous
+    = mix
+
+- Miscellaneos
+    = abort
+    = abort_unless
+    = abort_if
+    = auth
+    = back
+    = collect
+    = config
+    = csrf_field, csrf_token
+    = dd
+    = env // don't use env outside config files
+    = dispatch
+    = factory
+    = old
+    = redirect
+    = response
+    = view
+
+=== Collections ===
+- toArray // converts any collection or eloquent
+- all // converts only collections
+- filter, reject
+- where
+- first, last
+- each
+- map
+- reduce
+- pluck
+- chunk, take
+- groupBy
+- reverse, shuffle
+- sort
+- sortBy
+- sortByDesc
+- count
+- isEmpty
+- isNotEmpty
+- avg
+- sum
+
+
+=== You can use Collections outside of Laravel ===

@@ -1,0 +1,8 @@
+Writing APIs
+
+Restful charactaristics:
+    = structured around resources that you get with a URI
+    = depends on HTTP verbs (get cats/5 vs delete cats/5)
+    = they returh JSON
+
+

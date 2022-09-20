@@ -1,0 +1,30 @@
+- php artisan list or php artisan: show all commands
+- commands:
+    = clear-compiled: clear laravel compiled class file
+    = down, up: running and stopping maintaince mode
+    = dump-serve: copplect and output dumped files
+    = env: which environment
+    = help commandName
+    = migrate: run all migrations
+    = optimize: clears the configuration of route files
+    = sere --host --port
+    = tinker: ?
+- options:
+    = -q: hides all the output
+    = -v, -vv, -vvv: level of output(normal, verbose, debug)
+    = --no-interaction: no command questions
+    = --version
+    = --env
+
+- Group commands:
+    = auth:clear-resets: flushes all the expired password reset tockens from database
+    = cache:clear, cache:forget, cache:table
+    = config:cache, config:clear
+    = db:seed
+    = key:generate
+    = make
+    = notifications:table: creates database notifications table
+    = view:cache, view:clear
+- Custom commands:
+    = make:command commandName
+    = app/Console/Commands/commandName.php

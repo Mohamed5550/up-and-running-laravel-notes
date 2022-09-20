@@ -24,6 +24,13 @@ Envoironment:
 Unit test:
 - You can test a single method or class even it is connected to a framework
 
+Application testing:
+- HTTP tests:
+    = get, post, put, patch, delete
+    = you can use them all with json api, for example: getJson
+- auth:
+    = actingAs()
+
 Assertions:
 - AssertOk: checks for status code 200 response
 - AssertStatus: checks for a status
@@ -37,9 +44,36 @@ Assertions:
 - AssertRedirect: check if the page redirects to a route
 
 
+Database tests:
+- assertDatabaseHas($tablename, [$col => $val], $connection = optionally)
+- assetrDatabaseMissing($tablename, [$col => $val], $connection = optionally)
+- seeds allowed
+
+Testing other laravel systems:
+- you can check if the data was dispatched to the API without really sending it using event fake
+- but & queue fake
+- mail fake
+- notification fake
+- storage fake
+
 WithoutExceptionHandling:
 - is used to test the request without expecting exceptions
 
 Mocking:
+- mocking allows you to make a similar things to classes without instantiate them
+- Mockery
+- shouldRecieve() // tests if the facade recieves some message and you can customize the numbers it received it
 
+Artisan commands testing
 
+Browser tesing:
+- Dusk
+- BrowserKit
+
+Working with Dusk:
+- installing Dusk
+    = composer require --dev laravel/dusk
+    = php artisan dusk:install
+- php artisan dusk // like ./vendor/bin/phpunit
+- php artisan dusk:make someTest
+- 

@@ -16,14 +16,15 @@ REST:
 Closures: are the php version of anonymous functions
 
 Defining routes:
-- static method: Route:get()
+- static method: Route::get()
 - non-staic method: $router->get();
 
 The route verb match
-- Route:match(["GET", "POST"], "/", function(){});
+- Route::match(["GET", "POST"], "/", function(){});
 
 Routes calling controller method:
-- Route:get("/", "ControlName@methodName")
+- Route::get("/", "ControllerName@methodName") // Not working in Laravel 9
+- Route::get("/", [ControllerName::class, "method"])
 
 Route parameters:
 - Optional: Route::get("users/{id?}", function($id = "anyId"){})
@@ -55,7 +56,7 @@ Middlewares:
 - it is commonly used to assign auth for a group
 - Route::middleware('auth)->group(function() {})
 - It's more common to defin middlewares in the controller
-- You can use except and only to specify the method which will recice the middleware
+- You can use "except" and "only" to specify the method which will recieve the middleware
 - you define it in the constructor: 
 public function __construct() {
     $this->middleware('auth')

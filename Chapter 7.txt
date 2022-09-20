@@ -1,0 +1,49 @@
+Injecting a Request Object:
+    - Illuminate\Http\Request to collect user input
+    - Request methods:
+        = all()
+        = except()
+        = only()
+        = input("name", "default value")
+        = has()
+        = method(), isMethod()
+        = array Input: steps are "." instead of braces with input()
+    - You can use request() helper instead of the object
+    - From Request:
+        = $request->segments() // all
+        = $request->segment(id) // 1-indexed
+    - From route parameters: normal routes variables
+    - Uploaded files:
+        = $request->file()
+        = $request->hasFile()
+
+Validation:
+    - $request->validate([
+        "field" => "required|max:125"
+        or
+        "field" => ["required". "max:125"]    
+    ])
+    - Requiriing:
+        = required; required_if:anotherField,equalToThisvalue; required_unless;
+    - datatypes:
+        = alpha; apha_dash; alpha_num; numeric; integer
+        = emil; active_url; ip
+    - dates:
+        = after:date; before:date;
+    - Numbers:
+        = betweem:min,max; min; max; size;
+    - images:
+        = min_heigh; max_heigh; width: height: ratio
+    - Database:
+        = exists; unique;
+    - Manual Validation
+    - Custom Rule Object:
+        = php artisan make:rule ruleName
+        = in app/Rules/ruleName.php
+        = $request->validate([
+            "field" => new ruleName()
+        ])
+
+Form Requests:
+    - php artisan make:request CreateLoginRequest
+    - app/Http/Rquests/CreateLoginRequest.php

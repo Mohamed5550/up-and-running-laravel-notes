@@ -1,0 +1,99 @@
+===== Storage =====
+
+other data storage than relational database:
+- file uploads and manipulation
+- sessions
+- cache
+- logging
+- cookies
+
+
+configuring filesystem:
+- every connection is called a disk
+- storage_path() helper
+- local, public, s3
+- php artisan sotrage:link => maps the files from storage/app/public to public/storage
+
+
+storage Facade:
+- to specify a disk: Storage::disk()->get()
+- you can set it by default in config/filesystem.php
+- methods of filesystem
+
+
+Additional filesystem provider:
+- 
+
+Basic file uploads, downloads and manipulation:
+- upload with Storage:put()
+- resize image with Image::make($original)->resize() // Intervention
+- store, storeAs to upload using the file itself
+- Storage::download("filename");
+
+
+Sessions:
+- session()->put()
+- session()->get()
+
+
+
+Accessing session:
+- session()->get()
+- $request->session()->get() // illuminate request
+- (new Illuminate/Session/store)->get()
+- session($key) = session->get($key)
+- session([$key => $value]) = session()->put($key, $value)
+- other methods: push, has, all, forget, pull, regenerate
+
+Flash session storage
+- to view only on the next page request
+- flash instead of put
+- reflash -> passes the previous flashed to another one request
+- reflash()->keep -> to select specific keys to be keeped with reflash
+
+Cache:
+- storing data per application not per user
+- facade Cache:get()
+- Repository:Cache
+- helper Cache
+- add() with seconds expiration time
+- forver() yes forever
+- remeber, remember forever, if it found, ok, if not, put it with closure then return it
+- increment()
+- forget(), flush()
+
+Cookies:
+- with request
+- with response
+- with queue
+- get, has
+- make()
+- queue(), like make but automatically attached to the response
+- Responnse::cookie() to add cookie to response
+
+
+Logging:
+- like console.log in javascript
+- logs data for debugging
+- Log::severity
+- severities:
+    = emergency
+    = alert
+    = critical
+    = error
+    = warning
+    = notice
+    = info
+    = debug
+- you can pass data to the second parameter
+
+Log Channels:
+- daily
+- single
+- slack
+- stack
+- Log::channel()->info()
+
+
+Full text search with Scout
+- applying advanced searching functionalities on eloquent models

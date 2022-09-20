@@ -161,3 +161,72 @@ Scopes:
     {
         return $query->where("prop", $property);    
     }
+- Global scopes: 
+    - closure or class
+    - delete them with "withoutGlobalScope" or "withoutGlobalScopes(), accepts name or class, the second one accepts array of them and can exclude all when passed an empty array
+
+Accessors:
+    - get custom attributes from models
+    - getTestAttribute => $model->test
+
+Mutators:
+    - to change the value before inserting it to the database column
+    - getTestAttribute
+
+Casts:
+    - to cast data from databse into some datatypes in laravel (Collection, Carbon...etc)
+
+
+Collections:
+    - Tightanco/Collection package to use collections outside laravel
+    - create: collect([...array])
+    - reject? to delete some elements upon a condition
+    - map? to update all elements with a function
+    - sum()? reduce the collection into some number
+    - and more than 60 mehthods available on collection
+    - they are treated like normal arrays
+    - custom collections on models? newCollection($models)
+
+
+Serialization:
+    - toArray()
+    - toJson()
+    - you can just use simple casting to string and the collection will use toJson()
+    - $appends, to add the extra columns to json output
+    - hidden, visible for displaying fields into the json response
+    - appends
+    - 
+
+Relationships:
+
+- One to One:
+    - $this->hasOne(AnotherEloquent::class)
+    - $this->belongsTo()
+
+- One to Many:
+    - $this->hasMany()
+    - $this->belongsTo()
+    - associate and dissociate
+    - Model::has('field') // returns only records that has related "field" 
+    - whereHas
+    - hasManyThrough
+    - hasOneThrough
+
+- Many to Many:
+    - pivot table: tabl1_table2 sorted alphapitically
+    - belongsToMany: in both models
+
+- Child Updating timestamps
+    - touches
+
+- Eager loading
+    - with()
+    - load()
+    - loadMissing()
+    - withCount()
+
+
+
+Eloquent Events
+
+- 

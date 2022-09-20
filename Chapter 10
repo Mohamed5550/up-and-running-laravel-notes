@@ -1,0 +1,110 @@
+=====================
+Requests, Responces, and Middleware
+=====================
+
+Laravel Request lifecycle:
+- Every request goes to illuminate request crossing many layers, then it goes to the application then it returns an illuminate response
+
+Bootstrapping the application:
+- Every request is handled using .htaccess or ngix and eveything goes to index.php
+- in index.php it calls the composer, container, and kernel
+
+Laravel's kernel:
+- Kernel is the core router of Laravel application
+
+Servic Provider:
+- It initializes the bootstrap before the application runs
+- boot(): 
+- register(): 
+- maybe: provides():
+
+The request object:
+- 
+
+Getting request object:
+- $request->all()
+- request()->all
+- app('request') to get an instance of the request
+
+Getting basic information about a request:
+- user input:
+    = all
+    = input
+    = only
+    = except
+    = exists
+    = filled
+    = json
+    = json(keyname)
+- user and request state:
+    = method
+    = path
+    = url
+    = is // regex
+    = ip
+    = header
+    = server
+    = secure // https
+
+- file
+    = file()
+    = allFiles() // same of file()
+    = hasFile()
+
+- Sessions
+    = flash()
+    = flashOnly()
+    = flashExcept()
+    = old()
+    = flush
+    = cookie
+    = hasCookie
+
+--------------------
+The Response Object:
+
+Sending response:
+- return response("")
+- second parameter is http code
+- you can chain headers and cookies
+
+Specialized response types:
+- view
+    = when you need to return view with custom headers 
+    = response()->view("name", $data)->header("Content-Type", $type)
+- download
+    = response()->download("path", "download-name", [headers])
+    = ->deleteFileAfterSend()
+- file
+    = same as download but for viewing a file
+    = respnose()->file("name", [headers])
+- JSON
+    = json(array or eloquent)
+    = ->setCallback for JSONP
+
+Redirect responses:
+- response()->redirectTo()
+- redirect()
+- redirect()->back() or back()
+- redirect()->to() is redirect()
+- redirect()->route()
+- redirect()->action('NameOfController@method')
+- redirect()->away() // external domain
+
+Custom response macros:
+- for creating custom response types
+
+
+The responsable interface
+- for creating custom response types but for complicated systems, based on classes not methods
+
+---------------------------------------------
+Middleware:
+- Middleware is the first thing to recieve the request and the last thing to interact with the response in the application
+- php artisan make:middleware MiddlewareName
+- Understanding Middleware handle method:
+    = it runs first thing in the application
+    = it then goes to the next middleware in the stack
+    = it returns back to the middleware before sending therequest to user
+- You can add global middleware or route middleware in Kernel.php
+- Middleware groups
